@@ -152,7 +152,9 @@ html_template = """
             </select>
             
             <label for="fare">Fare:</label>
-            <input type="number" id="fare" name="fare" step="0.01" min="0" required>
+            <input type="number" id="fare" name="fare" step="0.01" min="0" placeholder="e.g., 32.00" required>
+            <p style="color: #d4af37; font-size: 14px;">*Median Fare: $32.00</p>
+
             
             <input type="submit" value="LET'S SEE!">
         </form>
@@ -251,6 +253,7 @@ def index():
     )
 
 # Simulated environment: a webpage with a dark theme and golden accent.
+
 @app.route('/simulate', methods=['GET', 'POST'])
 def simulate():
     if request.method == 'POST':
@@ -272,8 +275,14 @@ def simulate():
             features = [sex_male, pclass_3, sibsp, fare, child, pclass_2]
             features_array = np.array(features).reshape(1, -1)
             
+            # Debug: Print features being passed to the model
+            print("Features passed to the model:", features_array)
+            
             # Make prediction
             prediction = model.predict(features_array)[0]  # 0 or 1
+            
+            # Debug: Print prediction
+            print("Model prediction:", prediction)
             
             # Render the template with prediction
             return render_template_string(
