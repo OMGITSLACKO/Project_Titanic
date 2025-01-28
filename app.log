@@ -1,0 +1,437 @@
+2025-01-27 15:36:19,802 INFO Model loaded successfully.
+2025-01-27 15:36:19,810 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 15:36:19,848 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-27 15:36:19,849 INFO [33mPress CTRL+C to quit[0m
+2025-01-27 15:36:19,853 INFO  * Restarting with stat
+2025-01-27 15:36:20,770 INFO Model loaded successfully.
+2025-01-27 15:36:20,772 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 15:36:20,782 WARNING  * Debugger is active!
+2025-01-27 15:36:20,786 INFO  * Debugger PIN: 691-805-789
+2025-01-27 15:36:26,371 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 2, Fare: 32.0
+2025-01-27 15:36:26,371 DEBUG Features passed to the model: [[ 0.  0.  2. 32.  1.  0.]]
+2025-01-27 15:36:26,375 DEBUG Model prediction: 0
+2025-01-27 15:36:26,376 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 15:36:26,381 INFO 127.0.0.1 - - [27/Jan/2025 15:36:26] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 15:36:32,427 INFO 127.0.0.1 - - [27/Jan/2025 15:36:32] "GET / HTTP/1.1" 200 -
+2025-01-27 15:36:34,594 INFO 127.0.0.1 - - [27/Jan/2025 15:36:34] "GET /simulate HTTP/1.1" 200 -
+2025-01-27 15:36:43,038 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 4, Fare: 32.0
+2025-01-27 15:36:43,038 DEBUG Features passed to the model: [[ 0.  0.  4. 32.  1.  0.]]
+2025-01-27 15:36:43,041 DEBUG Model prediction: 0
+2025-01-27 15:36:43,041 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 15:36:43,047 INFO 127.0.0.1 - - [27/Jan/2025 15:36:43] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 15:36:45,727 INFO 127.0.0.1 - - [27/Jan/2025 15:36:45] "GET / HTTP/1.1" 200 -
+2025-01-27 15:41:24,273 INFO  * Detected change in 'C:\\Users\\Administrator\\Project_Titanic\\app.py', reloading
+2025-01-27 15:41:24,429 INFO  * Restarting with stat
+2025-01-27 15:44:22,935 INFO Model loaded successfully.
+2025-01-27 15:44:22,937 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 15:44:23,000 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-27 15:44:23,001 INFO [33mPress CTRL+C to quit[0m
+2025-01-27 15:44:23,005 INFO  * Restarting with stat
+2025-01-27 15:44:23,934 INFO Model loaded successfully.
+2025-01-27 15:44:23,935 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 15:44:23,945 WARNING  * Debugger is active!
+2025-01-27 15:44:23,950 INFO  * Debugger PIN: 691-805-789
+2025-01-27 15:44:29,232 INFO 127.0.0.1 - - [27/Jan/2025 15:44:29] "GET /simulate HTTP/1.1" 200 -
+2025-01-27 15:44:40,801 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 4, Fare: 111111.0
+2025-01-27 15:44:40,801 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 15:44:40,803 DEBUG Features passed to the model: [[0.00000e+00 0.00000e+00 4.00000e+00 1.11111e+05 1.00000e+00 0.00000e+00]]
+2025-01-27 15:44:40,806 DEBUG Model prediction: 0
+2025-01-27 15:44:40,806 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 15:44:40,812 INFO 127.0.0.1 - - [27/Jan/2025 15:44:40] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 15:44:48,937 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 1.1111111111111111e+20
+2025-01-27 15:44:48,937 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 15:44:48,939 DEBUG Features passed to the model: [[0.00000000e+00 0.00000000e+00 0.00000000e+00 1.11111111e+20
+  0.00000000e+00 0.00000000e+00]]
+2025-01-27 15:44:48,942 DEBUG Model prediction: 0
+2025-01-27 15:44:48,942 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 15:44:48,948 INFO 127.0.0.1 - - [27/Jan/2025 15:44:48] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 15:45:02,880 DEBUG Received inputs - Age: 0.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 0.0
+2025-01-27 15:45:02,880 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 15:45:02,882 DEBUG Features passed to the model: [[0. 0. 0. 0. 1. 0.]]
+2025-01-27 15:45:02,884 DEBUG Model prediction: 1
+2025-01-27 15:45:02,884 INFO Prediction result: Survived (Expected)
+2025-01-27 15:45:02,890 INFO 127.0.0.1 - - [27/Jan/2025 15:45:02] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:08:44,620 INFO  * Detected change in 'C:\\Users\\Administrator\\Project_Titanic\\app.py', reloading
+2025-01-27 17:08:44,768 INFO  * Restarting with stat
+2025-01-27 17:09:09,743 INFO Model loaded successfully.
+2025-01-27 17:09:09,745 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:09:09,760 WARNING  * Debugger is active!
+2025-01-27 17:09:09,764 INFO  * Debugger PIN: 691-805-789
+2025-01-27 17:14:44,997 INFO Model loaded successfully.
+2025-01-27 17:14:45,000 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:14:45,037 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-27 17:14:45,038 INFO [33mPress CTRL+C to quit[0m
+2025-01-27 17:14:45,041 INFO  * Restarting with stat
+2025-01-27 17:14:46,015 INFO Model loaded successfully.
+2025-01-27 17:14:46,016 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:14:46,027 WARNING  * Debugger is active!
+2025-01-27 17:14:46,030 INFO  * Debugger PIN: 691-805-789
+2025-01-27 17:14:53,321 DEBUG Received inputs - Age: 0.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 0.0
+2025-01-27 17:14:53,321 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 17:14:53,323 DEBUG Features passed to the model: [[0. 0. 0. 0. 1. 0.]]
+2025-01-27 17:14:53,324 DEBUG Model prediction: 1
+2025-01-27 17:14:53,325 INFO Prediction result: Survived (Expected)
+2025-01-27 17:14:53,330 INFO 127.0.0.1 - - [27/Jan/2025 17:14:53] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:02,573 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 100.0
+2025-01-27 17:15:02,573 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 17:15:02,574 DEBUG Features passed to the model: [[  0.   0.   1. 100.   0.   0.]]
+2025-01-27 17:15:02,577 DEBUG Model prediction: 0
+2025-01-27 17:15:02,578 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:15:02,584 INFO 127.0.0.1 - - [27/Jan/2025 17:15:02] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:11,554 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 4, Fare: 32.0
+2025-01-27 17:15:11,554 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 17:15:11,556 DEBUG Features passed to the model: [[ 0.  0.  4. 32.  1.  0.]]
+2025-01-27 17:15:11,558 DEBUG Model prediction: 0
+2025-01-27 17:15:11,558 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:15:11,564 INFO 127.0.0.1 - - [27/Jan/2025 17:15:11] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:13,487 INFO 127.0.0.1 - - [27/Jan/2025 17:15:13] "GET / HTTP/1.1" 200 -
+2025-01-27 17:15:15,189 INFO 127.0.0.1 - - [27/Jan/2025 17:15:15] "GET /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:23,353 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 4, Fare: 32.0
+2025-01-27 17:15:23,354 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 17:15:23,355 DEBUG Features passed to the model: [[ 0.  0.  4. 32.  1.  0.]]
+2025-01-27 17:15:23,357 DEBUG Model prediction: 0
+2025-01-27 17:15:23,357 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:15:23,364 INFO 127.0.0.1 - - [27/Jan/2025 17:15:23] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:33,000 DEBUG Received inputs - Age: 0.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 0.0
+2025-01-27 17:15:33,001 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 17:15:33,002 DEBUG Features passed to the model: [[0. 0. 0. 0. 1. 0.]]
+2025-01-27 17:15:33,005 DEBUG Model prediction: 1
+2025-01-27 17:15:33,005 INFO Prediction result: Survived (Expected)
+2025-01-27 17:15:33,012 INFO 127.0.0.1 - - [27/Jan/2025 17:15:33] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:15:54,568 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 72.0
+2025-01-27 17:15:54,568 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 17:15:54,570 DEBUG Features passed to the model: [[ 0.  0.  0. 72.  0.  0.]]
+2025-01-27 17:15:54,572 DEBUG Model prediction: 0
+2025-01-27 17:15:54,573 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:15:54,579 INFO 127.0.0.1 - - [27/Jan/2025 17:15:54] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:30:34,513 INFO Model loaded successfully.
+2025-01-27 17:30:34,515 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:30:34,516 INFO Scaler is fitted.
+2025-01-27 17:30:34,543 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-27 17:30:34,543 INFO [33mPress CTRL+C to quit[0m
+2025-01-27 17:30:34,547 INFO  * Restarting with stat
+2025-01-27 17:30:35,538 INFO Model loaded successfully.
+2025-01-27 17:30:35,540 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:30:35,540 INFO Scaler is fitted.
+2025-01-27 17:30:35,550 WARNING  * Debugger is active!
+2025-01-27 17:30:35,554 INFO  * Debugger PIN: 691-805-789
+2025-01-27 17:30:42,283 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 72.0
+2025-01-27 17:30:42,283 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 17:30:42,284 DEBUG Features passed to the model: [[ 0.  0.  0. 72.  0.  0.]]
+2025-01-27 17:30:42,286 DEBUG Model prediction: 0
+2025-01-27 17:30:42,287 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:30:42,292 INFO 127.0.0.1 - - [27/Jan/2025 17:30:42] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:30:45,544 INFO 127.0.0.1 - - [27/Jan/2025 17:30:45] "GET / HTTP/1.1" 200 -
+2025-01-27 17:30:47,177 INFO 127.0.0.1 - - [27/Jan/2025 17:30:47] "GET /simulate HTTP/1.1" 200 -
+2025-01-27 17:30:58,706 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 32.0
+2025-01-27 17:30:58,706 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 17:30:58,707 DEBUG Features passed to the model: [[ 0.  0.  1. 32.  1.  0.]]
+2025-01-27 17:30:58,709 DEBUG Model prediction: 0
+2025-01-27 17:30:58,709 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 17:30:58,715 INFO 127.0.0.1 - - [27/Jan/2025 17:30:58] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 17:53:21,996 INFO  * Detected change in 'C:\\Users\\Administrator\\Project_Titanic\\app.py', reloading
+2025-01-27 17:53:22,309 INFO  * Restarting with stat
+2025-01-27 17:53:46,878 INFO Model loaded successfully.
+2025-01-27 17:53:46,880 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 17:53:46,881 INFO Scaler is fitted.
+2025-01-27 17:53:46,898 WARNING  * Debugger is active!
+2025-01-27 17:53:46,903 INFO  * Debugger PIN: 691-805-789
+2025-01-27 18:50:47,614 INFO Model loaded successfully.
+2025-01-27 18:50:47,618 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 18:50:47,618 INFO Scaler is fitted.
+2025-01-27 18:50:47,676 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-27 18:50:47,676 INFO [33mPress CTRL+C to quit[0m
+2025-01-27 18:50:47,680 INFO  * Restarting with stat
+2025-01-27 18:50:48,667 INFO Model loaded successfully.
+2025-01-27 18:50:48,668 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'mlp': MLPClassifier(activation='tanh', alpha=0.1, max_iter=500, random_state=52)}
+2025-01-27 18:50:48,669 INFO Scaler is fitted.
+2025-01-27 18:50:48,679 WARNING  * Debugger is active!
+2025-01-27 18:50:48,684 INFO  * Debugger PIN: 691-805-789
+2025-01-27 18:51:15,281 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 32.0
+2025-01-27 18:51:15,281 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 18:51:15,282 DEBUG Features passed to the model: [[ 0.  0.  1. 32.  1.  0.]]
+2025-01-27 18:51:15,286 DEBUG Model prediction: 0
+2025-01-27 18:51:15,287 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 18:51:15,292 INFO 127.0.0.1 - - [27/Jan/2025 18:51:15] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 18:51:17,882 INFO 127.0.0.1 - - [27/Jan/2025 18:51:17] "GET / HTTP/1.1" 200 -
+2025-01-27 18:51:19,591 INFO 127.0.0.1 - - [27/Jan/2025 18:51:19] "GET /simulate HTTP/1.1" 200 -
+2025-01-27 18:51:38,488 DEBUG Received inputs - Age: 1.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 1.0
+2025-01-27 18:51:38,488 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 18:51:38,488 DEBUG Features passed to the model: [[0. 0. 1. 1. 1. 0.]]
+2025-01-27 18:51:38,489 DEBUG Model prediction: 1
+2025-01-27 18:51:38,489 INFO Prediction result: Survived (Expected)
+2025-01-27 18:51:38,496 INFO 127.0.0.1 - - [27/Jan/2025 18:51:38] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 18:51:49,516 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 100.0
+2025-01-27 18:51:49,516 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 18:51:49,516 DEBUG Features passed to the model: [[  0.   0.   0. 100.   0.   0.]]
+2025-01-27 18:51:49,517 DEBUG Model prediction: 0
+2025-01-27 18:51:49,517 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 18:51:49,523 INFO 127.0.0.1 - - [27/Jan/2025 18:51:49] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 18:52:06,499 DEBUG Received inputs - Age: 20.0, Sex: female, Pclass: 1, SibSp: 0, Fare: 32.0
+2025-01-27 18:52:06,500 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 18:52:06,500 DEBUG Features passed to the model: [[ 0.  0.  0. 32.  1.  0.]]
+2025-01-27 18:52:06,501 DEBUG Model prediction: 0
+2025-01-27 18:52:06,501 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 18:52:06,507 INFO 127.0.0.1 - - [27/Jan/2025 18:52:06] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 18:52:15,512 DEBUG Received inputs - Age: 0.0, Sex: male, Pclass: 1, SibSp: 0, Fare: 0.0
+2025-01-27 18:52:15,512 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 0, child: 1
+2025-01-27 18:52:15,515 DEBUG Features passed to the model: [[1. 0. 0. 0. 1. 0.]]
+2025-01-27 18:52:15,518 DEBUG Model prediction: 1
+2025-01-27 18:52:15,520 INFO Prediction result: Survived (Expected)
+2025-01-27 18:52:15,527 INFO 127.0.0.1 - - [27/Jan/2025 18:52:15] "POST /simulate HTTP/1.1" 200 -
+2025-01-27 18:52:44,672 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 300.0
+2025-01-27 18:52:44,672 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 0
+2025-01-27 18:52:44,677 DEBUG Features passed to the model: [[  0.   0.   1. 300.   0.   0.]]
+2025-01-27 18:52:44,679 DEBUG Model prediction: 0
+2025-01-27 18:52:44,680 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-27 18:52:44,688 INFO 127.0.0.1 - - [27/Jan/2025 18:52:44] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:19:47,194 INFO Model loaded successfully.
+2025-01-28 11:19:47,198 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'logreg': LogisticRegression(C=0.0062505519252739694, max_iter=500, random_state=52)}
+2025-01-28 11:19:47,198 INFO Scaler is fitted.
+2025-01-28 11:19:47,243 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-28 11:19:47,244 INFO [33mPress CTRL+C to quit[0m
+2025-01-28 11:19:47,248 INFO  * Restarting with stat
+2025-01-28 11:19:48,489 INFO Model loaded successfully.
+2025-01-28 11:19:48,491 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'logreg': LogisticRegression(C=0.0062505519252739694, max_iter=500, random_state=52)}
+2025-01-28 11:19:48,491 INFO Scaler is fitted.
+2025-01-28 11:19:48,500 WARNING  * Debugger is active!
+2025-01-28 11:19:48,504 INFO  * Debugger PIN: 465-992-500
+2025-01-28 11:20:35,678 INFO 127.0.0.1 - - [28/Jan/2025 11:20:35] "GET / HTTP/1.1" 200 -
+2025-01-28 11:20:36,847 INFO 127.0.0.1 - - [28/Jan/2025 11:20:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-01-28 11:20:38,183 INFO 127.0.0.1 - - [28/Jan/2025 11:20:38] "GET /simulate HTTP/1.1" 200 -
+2025-01-28 11:20:58,606 DEBUG Received inputs - Age: 18.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 32.0, Embarked: S
+2025-01-28 11:20:58,606 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:20:58,606 DEBUG Features passed to the model: [[ 0. 32.  0.  1.  0. 18.  1.  0.]]
+2025-01-28 11:20:58,610 DEBUG Model prediction: 1, Probability of Survival: 0.98
+2025-01-28 11:20:58,611 INFO Prediction result: Survived (Expected)
+2025-01-28 11:20:58,617 INFO 127.0.0.1 - - [28/Jan/2025 11:20:58] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:21:48,344 DEBUG Received inputs - Age: 33.0, Sex: female, Pclass: 3, SibSp: 0, Fare: 3.0, Embarked: S
+2025-01-28 11:21:48,345 DEBUG Engineered features - sex_male: 0, pclass_3: 1, pclass_2: 0, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:21:48,350 DEBUG Features passed to the model: [[ 0.  3.  1.  0.  0. 33.  1.  0.]]
+2025-01-28 11:21:48,353 DEBUG Model prediction: 0, Probability of Survival: 0.09
+2025-01-28 11:21:48,354 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-28 11:21:48,361 INFO 127.0.0.1 - - [28/Jan/2025 11:21:48] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:22:12,700 DEBUG Received inputs - Age: 28.0, Sex: female, Pclass: 2, SibSp: 1, Fare: 32.0, Embarked: S
+2025-01-28 11:22:12,700 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:22:12,703 DEBUG Features passed to the model: [[ 0. 32.  0.  0.  1. 28.  1.  0.]]
+2025-01-28 11:22:12,707 DEBUG Model prediction: 1, Probability of Survival: 0.97
+2025-01-28 11:22:12,708 INFO Prediction result: Survived (Expected)
+2025-01-28 11:22:12,715 INFO 127.0.0.1 - - [28/Jan/2025 11:22:12] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:22:34,318 DEBUG Received inputs - Age: 28.0, Sex: female, Pclass: 2, SibSp: 4, Fare: 32.0, Embarked: S
+2025-01-28 11:22:34,318 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:22:34,321 DEBUG Features passed to the model: [[ 0. 32.  0.  0.  1. 28.  1.  0.]]
+2025-01-28 11:22:34,325 DEBUG Model prediction: 1, Probability of Survival: 0.97
+2025-01-28 11:22:34,325 INFO Prediction result: Survived (Expected)
+2025-01-28 11:22:34,332 INFO 127.0.0.1 - - [28/Jan/2025 11:22:34] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:22:53,684 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 1, Fare: 32.0, Embarked: S
+2025-01-28 11:22:53,684 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:22:53,687 DEBUG Features passed to the model: [[ 1. 32.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:22:53,693 DEBUG Model prediction: 1, Probability of Survival: 0.87
+2025-01-28 11:22:53,693 INFO Prediction result: Survived (Expected)
+2025-01-28 11:22:53,701 INFO 127.0.0.1 - - [28/Jan/2025 11:22:53] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:28:28,181 INFO  * Detected change in 'C:\\Users\\Administrator\\Project_Titanic_2\\app.py', reloading
+2025-01-28 11:28:28,415 INFO  * Restarting with stat
+2025-01-28 11:28:57,959 INFO Model loaded successfully.
+2025-01-28 11:28:57,961 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'logreg': LogisticRegression(C=0.0062505519252739694, max_iter=500, random_state=52)}
+2025-01-28 11:28:57,963 INFO Scaler is fitted.
+2025-01-28 11:29:09,873 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.14.0.2:5000
+2025-01-28 11:29:09,873 INFO [33mPress CTRL+C to quit[0m
+2025-01-28 11:30:20,908 DEBUG Received inputs - Age: 18.0, Sex: female, Pclass: 1, SibSp: 1, Fare: 32.0, Embarked: S
+2025-01-28 11:30:20,908 DEBUG Engineered features - sex_male: 0, pclass_3: 0, pclass_2: 0, child: 1, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:30:20,909 DEBUG Features passed to the model: [[ 0. 32.  0.  1.  0. 18.  1.  0.]]
+2025-01-28 11:30:20,913 DEBUG Model prediction: 1, Probability of Survival: 0.98
+2025-01-28 11:30:20,913 INFO Prediction result: Survived (Expected)
+2025-01-28 11:30:20,939 ERROR Error during prediction:
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Project_Titanic_2\app.py", line 353, in simulate
+    return render_template_string(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 162, in render_template_string
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 149, in top-level template code
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str' is undefined
+2025-01-28 11:30:20,956 ERROR Exception on /simulate [POST]
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Project_Titanic_2\app.py", line 353, in simulate
+    return render_template_string(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 162, in render_template_string
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 149, in top-level template code
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str' is undefined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Project_Titanic_2\app.py", line 391, in simulate
+    return render_template_string(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 162, in render_template_string
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 149, in top-level template code
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str' is undefined
+2025-01-28 11:30:20,963 INFO 127.0.0.1 - - [28/Jan/2025 11:30:20] "[35m[1mPOST /simulate HTTP/1.1[0m" 500 -
+2025-01-28 11:30:24,120 INFO 127.0.0.1 - - [28/Jan/2025 11:30:24] "GET / HTTP/1.1" 200 -
+2025-01-28 11:30:25,868 ERROR Exception on /simulate [GET]
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Administrator\Project_Titanic_2\app.py", line 403, in simulate
+    return render_template_string(html_template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 162, in render_template_string
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "<template>", line 149, in top-level template code
+  File "C:\ProgramData\anaconda3\envs\titanic_env\Lib\site-packages\jinja2\utils.py", line 92, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'str' is undefined
+2025-01-28 11:30:25,872 INFO 127.0.0.1 - - [28/Jan/2025 11:30:25] "[35m[1mGET /simulate HTTP/1.1[0m" 500 -
+2025-01-28 11:38:33,232 INFO Model loaded successfully.
+2025-01-28 11:38:33,233 DEBUG Pipeline Steps: {'scaler': StandardScaler(), 'logreg': LogisticRegression(C=0.0062505519252739694, max_iter=500, random_state=52)}
+2025-01-28 11:38:33,234 INFO Scaler is fitted.
+2025-01-28 11:38:45,163 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.14.0.2:5000
+2025-01-28 11:38:45,164 INFO [33mPress CTRL+C to quit[0m
+2025-01-28 11:39:14,878 INFO 127.0.0.1 - - [28/Jan/2025 11:39:14] "GET / HTTP/1.1" 200 -
+2025-01-28 11:39:17,089 INFO 127.0.0.1 - - [28/Jan/2025 11:39:17] "GET /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:29,760 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 32.0, Embarked: S
+2025-01-28 11:39:29,760 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:39:29,761 DEBUG Features passed to the model: [[ 1. 32.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:39:29,763 DEBUG Model prediction: 1, Probability of Survival: 0.87
+2025-01-28 11:39:29,764 INFO Prediction result: Survived (Expected)
+2025-01-28 11:39:29,775 INFO 127.0.0.1 - - [28/Jan/2025 11:39:29] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:33,605 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 32.0, Embarked: Q
+2025-01-28 11:39:33,606 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 0, sibsp_5: 0
+2025-01-28 11:39:33,606 DEBUG Features passed to the model: [[ 1. 32.  0.  0.  1. 34.  0.  0.]]
+2025-01-28 11:39:33,609 DEBUG Model prediction: 1, Probability of Survival: 0.90
+2025-01-28 11:39:33,609 INFO Prediction result: Survived (Expected)
+2025-01-28 11:39:33,625 INFO 127.0.0.1 - - [28/Jan/2025 11:39:33] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:36,881 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 32.0, Embarked: C
+2025-01-28 11:39:36,882 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 0, sibsp_5: 0
+2025-01-28 11:39:36,884 DEBUG Features passed to the model: [[ 1. 32.  0.  0.  1. 34.  0.  0.]]
+2025-01-28 11:39:36,888 DEBUG Model prediction: 1, Probability of Survival: 0.90
+2025-01-28 11:39:36,888 INFO Prediction result: Survived (Expected)
+2025-01-28 11:39:36,900 INFO 127.0.0.1 - - [28/Jan/2025 11:39:36] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:43,744 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 10.0, Embarked: C
+2025-01-28 11:39:43,744 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 0, sibsp_5: 0
+2025-01-28 11:39:43,746 DEBUG Features passed to the model: [[ 1. 10.  0.  0.  1. 34.  0.  0.]]
+2025-01-28 11:39:43,753 DEBUG Model prediction: 0, Probability of Survival: 0.20
+2025-01-28 11:39:43,753 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-28 11:39:43,765 INFO 127.0.0.1 - - [28/Jan/2025 11:39:43] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:49,181 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 15.0, Embarked: C
+2025-01-28 11:39:49,182 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 0, sibsp_5: 0
+2025-01-28 11:39:49,184 DEBUG Features passed to the model: [[ 1. 15.  0.  0.  1. 34.  0.  0.]]
+2025-01-28 11:39:49,189 DEBUG Model prediction: 0, Probability of Survival: 0.36
+2025-01-28 11:39:49,190 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-28 11:39:49,203 INFO 127.0.0.1 - - [28/Jan/2025 11:39:49] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:53,332 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 20.0, Embarked: C
+2025-01-28 11:39:53,332 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 0, sibsp_5: 0
+2025-01-28 11:39:53,335 DEBUG Features passed to the model: [[ 1. 20.  0.  0.  1. 34.  0.  0.]]
+2025-01-28 11:39:53,340 DEBUG Model prediction: 1, Probability of Survival: 0.56
+2025-01-28 11:39:53,341 INFO Prediction result: Survived (Expected)
+2025-01-28 11:39:53,355 INFO 127.0.0.1 - - [28/Jan/2025 11:39:53] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:39:57,475 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 20.0, Embarked: S
+2025-01-28 11:39:57,475 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:39:57,478 DEBUG Features passed to the model: [[ 1. 20.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:39:57,483 DEBUG Model prediction: 0, Probability of Survival: 0.49
+2025-01-28 11:39:57,483 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-28 11:39:57,496 INFO 127.0.0.1 - - [28/Jan/2025 11:39:57] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:40:02,564 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 2, Fare: 21.0, Embarked: S
+2025-01-28 11:40:02,565 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:40:02,567 DEBUG Features passed to the model: [[ 1. 21.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:40:02,571 DEBUG Model prediction: 1, Probability of Survival: 0.53
+2025-01-28 11:40:02,573 INFO Prediction result: Survived (Expected)
+2025-01-28 11:40:02,585 INFO 127.0.0.1 - - [28/Jan/2025 11:40:02] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:40:09,916 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 10, Fare: 21.0, Embarked: S
+2025-01-28 11:40:09,916 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:40:09,920 DEBUG Features passed to the model: [[ 1. 21.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:40:09,923 DEBUG Model prediction: 1, Probability of Survival: 0.53
+2025-01-28 11:40:09,923 INFO Prediction result: Survived (Expected)
+2025-01-28 11:40:09,936 INFO 127.0.0.1 - - [28/Jan/2025 11:40:09] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:40:12,598 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 0, Fare: 21.0, Embarked: S
+2025-01-28 11:40:12,598 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:40:12,601 DEBUG Features passed to the model: [[ 1. 21.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:40:12,607 DEBUG Model prediction: 1, Probability of Survival: 0.53
+2025-01-28 11:40:12,607 INFO Prediction result: Survived (Expected)
+2025-01-28 11:40:12,627 INFO 127.0.0.1 - - [28/Jan/2025 11:40:12] "POST /simulate HTTP/1.1" 200 -
+2025-01-28 11:40:17,717 DEBUG Received inputs - Age: 34.0, Sex: male, Pclass: 2, SibSp: 0, Fare: 20.0, Embarked: S
+2025-01-28 11:40:17,718 DEBUG Engineered features - sex_male: 1, pclass_3: 0, pclass_2: 1, child: 0, embarked_S: 1, sibsp_5: 0
+2025-01-28 11:40:17,720 DEBUG Features passed to the model: [[ 1. 20.  0.  0.  1. 34.  1.  0.]]
+2025-01-28 11:40:17,726 DEBUG Model prediction: 0, Probability of Survival: 0.49
+2025-01-28 11:40:17,727 INFO Prediction result: Did Not Survive (Unexpected)
+2025-01-28 11:40:17,744 INFO 127.0.0.1 - - [28/Jan/2025 11:40:17] "POST /simulate HTTP/1.1" 200 -

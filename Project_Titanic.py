@@ -5,56 +5,56 @@
 
 # Imports:
 
-# In[57]:
+# In[1]:
 
 
+import warnings
 import joblib
-import pandas as pd
 import requests
 from io import StringIO
+
+# Data handling
+import pandas as pd
 import numpy as np
+
+# Visualization
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib
 
+
+# Scikit-learn utilities
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
 from sklearn.linear_model import LogisticRegression, RidgeClassifier
-from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, confusion_matrix, classification_report
-from sklearn.exceptions import ConvergenceWarning
-import warnings
-
-warnings.filterwarnings("ignore", category=ConvergenceWarning)
-
-
-import numpy as np
-import pandas as pd
-from sklearn.linear_model import LogisticRegression, RidgeClassifier, PassiveAggressiveClassifier, LinearRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import (RandomForestClassifier, GradientBoostingClassifier, 
-                                  AdaBoostClassifier, ExtraTreesClassifier, BaggingClassifier)
+from sklearn.ensemble import (
+    RandomForestClassifier,
+    GradientBoostingClassifier,
+    AdaBoostClassifier,
+    ExtraTreesClassifier,
+    BaggingClassifier
+)
 from sklearn.svm import SVC, LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB, BernoulliNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import (accuracy_score, roc_auc_score, f1_score, 
-                             confusion_matrix, classification_report)
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    roc_auc_score,
+    confusion_matrix,
+    classification_report
+)
 from sklearn.exceptions import ConvergenceWarning
-import warnings
+
+# Suppress warnings
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 
-import pandas as pd
-import numpy as np
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import train_test_split
-
-import pandas as pd
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
-from sklearn.linear_model import RidgeClassifier
-from sklearn.neural_network import MLPClassifier
-
+# !conda update --all -y
+# 
 
 # Link to data:
 
@@ -199,7 +199,6 @@ for feature in numerical_features:
 # In[12]:
 
 
-# Create boxplots for numerical features
 for feature in numerical_features:
     plt.figure(figsize=(6, 4))
     sns.boxplot(x=data[feature], color='lightgreen')
@@ -423,9 +422,53 @@ cutoff_age, results_df = find_child_age_cutoff_v2(
 # In[22]:
 
 
-def find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test):
+import numpy as np
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+from sklearn.linear_model import (
+    LogisticRegression,
+    RidgeClassifier,
+    PassiveAggressiveClassifier
+)
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import (
+    RandomForestClassifier,
+    ExtraTreesClassifier,
+    GradientBoostingClassifier,
+    AdaBoostClassifier,
+    BaggingClassifier
+)
+from sklearn.svm import SVC, LinearSVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB, BernoulliNB
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import (
+    roc_auc_score,
+    accuracy_score,
+    f1_score,
+    confusion_matrix,
+    classification_report
+)
+from sklearn.impute import SimpleImputer
 
+def find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test):
+    """
+    Trains multiple classification models and selects the best one based on ROC AUC or F1 Score.
+    
+    Parameters:
+    - df_X_train: Training features
+    - df_X_test: Testing features
+    - df_y_train: Training labels
+    - df_y_test: Testing labels
+    """
+    # Suppress convergence warnings
     warnings.filterwarnings("ignore", category=ConvergenceWarning)
+    
+    # Handle missing values by imputing with mean for numerical features
+    imputer = SimpleImputer(strategy='mean')
+    df_X_train = imputer.fit_transform(df_X_train)
+    df_X_test = imputer.transform(df_X_test)
     
     # Try importing additional models; if not installed, they will be skipped.
     try:
@@ -468,6 +511,7 @@ def find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test)
         ("MLP Classifier", MLPClassifier(max_iter=1000, random_state=42))
     ]
     
+    # Add additional models if available
     if XGBClassifier is not None:
         models.append(("XGBoost Classifier", 
                        XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42)))
@@ -475,61 +519,112 @@ def find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test)
         models.append(("LightGBM Classifier", LGBMClassifier(random_state=42)))
     if CatBoostClassifier is not None:
         models.append(("CatBoost Classifier", CatBoostClassifier(verbose=0, random_state=42)))
-
+    
     best_model = None
-    best_auc = -np.inf
-    best_model_name = None
+    best_score = -np.inf
     best_model_instance = None
+    best_score_type = None  # To keep track of whether the best_score is ROC AUC or F1
 
     for name, model in models:
-        # Train the model
-        model.fit(df_X_train, df_y_train)
-        # Make predictions
-        y_pred = model.predict(df_X_test)
+        print(f"Training {name}...")
         try:
-            # Some models might not have predict_proba; if so, skip ROC AUC
-            y_pred_proba = model.predict_proba(df_X_test)[:, 1]
-            roc_auc = roc_auc_score(df_y_test, y_pred_proba)
-        except AttributeError:
+            # Train the model
+            model.fit(df_X_train, df_y_train)
+            
+            # Make predictions
+            y_pred = model.predict(df_X_test)
+            
+            # Initialize scores
             roc_auc = None
-
-        acc = accuracy_score(df_y_test, y_pred)
-        f1 = f1_score(df_y_test, y_pred)
+            f1 = None
+            
+            # Attempt to calculate ROC AUC if possible
+            if hasattr(model, "predict_proba"):
+                y_pred_proba = model.predict_proba(df_X_test)[:, 1]
+                if not np.isnan(y_pred_proba).any():
+                    roc_auc = roc_auc_score(df_y_test, y_pred_proba)
+                else:
+                    print(f"Warning: {name} predict_proba returned NaN values. ROC AUC will be skipped.")
+            elif hasattr(model, "decision_function"):
+                # Some models have decision_function instead of predict_proba
+                y_scores = model.decision_function(df_X_test)
+                if not np.isnan(y_scores).any():
+                    roc_auc = roc_auc_score(df_y_test, y_scores)
+                else:
+                    print(f"Warning: {name} decision_function returned NaN values. ROC AUC will be skipped.")
+            
+            # Calculate other metrics
+            acc = accuracy_score(df_y_test, y_pred)
+            f1 = f1_score(df_y_test, y_pred, zero_division=0)
+            
+            print(f"{name} Model:")
+            print(f"Accuracy: {acc:.4f}")
+            if roc_auc is not None:
+                print(f"ROC AUC Score: {roc_auc:.4f}")
+            else:
+                print("ROC AUC Score: Not available")
+            print(f"F1 Score: {f1:.4f}")
+            print("Confusion Matrix:")
+            print(confusion_matrix(df_y_test, y_pred))
+            print("Classification Report:")
+            print(classification_report(df_y_test, y_pred, zero_division=0))
+            print("\n")
+            
+            # Update best model based on ROC AUC if available; otherwise, use F1-score as backup
+            if roc_auc is not None:
+                if roc_auc > best_score:
+                    best_score = roc_auc
+                    best_model = name
+                    best_model_instance = model
+                    best_score_type = 'ROC AUC'
+            else:
+                if f1 > best_score:
+                    best_score = f1
+                    best_model = name
+                    best_model_instance = model
+                    best_score_type = 'F1 Score'
         
-        print(f"{name} Model:")
-        print("Accuracy:", acc)
-        if roc_auc is not None:
-            print("ROC AUC Score:", roc_auc)
+        except Exception as e:
+            print(f"An error occurred while training {name}: {e}\n")
+            continue  # Skip to the next model
+
+    if best_model is not None:
+        print(f"The best model is: {best_model} with a {best_score_type} of {best_score:.4f}\n")
+        
+        # Print the metrics for the best model
+        y_pred_best = best_model_instance.predict(df_X_test)
+        best_acc = accuracy_score(df_y_test, y_pred_best)
+        best_f1 = f1_score(df_y_test, y_pred_best, zero_division=0)
+        
+        print("Metrics of the Best Model:")
+        print(f"Accuracy: {best_acc:.4f}")
+        print(f"F1 Score: {best_f1:.4f}")
+        
+        # Calculate ROC AUC if possible
+        if hasattr(best_model_instance, "predict_proba"):
+            y_pred_proba_best = best_model_instance.predict_proba(df_X_test)[:, 1]
+            if not np.isnan(y_pred_proba_best).any():
+                best_roc_auc = roc_auc_score(df_y_test, y_pred_proba_best)
+                print(f"ROC AUC Score: {best_roc_auc:.4f}")
+            else:
+                print("ROC AUC Score: Not available (NaN values in predict_proba)")
+        elif hasattr(best_model_instance, "decision_function"):
+            y_scores_best = best_model_instance.decision_function(df_X_test)
+            if not np.isnan(y_scores_best).any():
+                best_roc_auc = roc_auc_score(df_y_test, y_scores_best)
+                print(f"ROC AUC Score: {best_roc_auc:.4f}")
+            else:
+                print("ROC AUC Score: Not available (NaN values in decision_function)")
         else:
-            print("ROC AUC Score: Not available")
-        print("F1 Score:", f1)
-        print("Confusion Matrix:")
-        print(confusion_matrix(df_y_test, y_pred))
+            print("ROC AUC Score: Not available (No predict_proba or decision_function)")
+        
+        print("\nConfusion Matrix:")
+        print(confusion_matrix(df_y_test, y_pred_best))
         print("Classification Report:")
-        print(classification_report(df_y_test, y_pred))
-        print("\n")
+        print(classification_report(df_y_test, y_pred_best, zero_division=0))
+    else:
+        print("No suitable model was found.")
 
-        # Update best model based on ROC AUC if available; otherwise, use F1-score as backup
-        if roc_auc is not None:
-            if roc_auc > best_auc:
-                best_auc = roc_auc
-                best_model = name
-                best_model_instance = model
-        else:
-            if f1 > best_auc:
-                best_auc = f1
-                best_model = name
-                best_model_instance = model
-
-    print("The best model is:", best_model, "with a ROC AUC Score of", best_auc)
-    # Print the metrics for the best model
-    y_pred_best = best_model_instance.predict(df_X_test)
-    best_acc = accuracy_score(df_y_test, y_pred_best)
-    best_f1 = f1_score(df_y_test, y_pred_best)
-    print("Metrics of the best model:")
-    print("Accuracy:", best_acc)
-    print("F1 Score:", best_f1)
-    print("ROC AUC Score:", best_auc)
 
 
 # In[23]:
@@ -712,7 +807,7 @@ selected_features, metrics_history = forward_feature_selection(df, target_column
                                                                 test_size=0.3, auc_threshold=0.001, max_features=None)
 
 
-# In[62]:
+# In[30]:
 
 
 selected_features = ['Sex_male', 'Pclass_3', 'SibSp', 'Fare', 'Child', 'Pclass_2']
@@ -1650,7 +1745,7 @@ def test_tuned_mlp(*dfs, target_column, test_size=0.2, random_state=52,
     return results
 
 
-# In[61]:
+# In[40]:
 
 
 tuned_params = {
@@ -1716,48 +1811,114 @@ results = test_tuned_mlp(
 # False positive and false negatives holds less meaning here, than in - for example - a healthcare modell. So, we try to maximize the accuracy and minimize the false predictions. Thats that. 
 
 # ### Ok let's save it
+# 
+# Also please note that we save the standard scaler as well, so that it can scale the input when we publish the model. 
 
-# In[64]:
+# In[43]:
 
 
-import pickle
+# ============================
+# 1. Imports
+# ============================
+
+import joblib
+import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
+from sklearn.metrics import (
+    accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
+)
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
-# Tuned parameters for MLPClassifier
-tuned_params = {
-    'activation': 'tanh',
-    'alpha': 0.1,
-    'hidden_layer_sizes': (100,)
-}
+# ============================
+# 2. Load and Prepare the Dataset
+# ============================
 
-# Using df_2 as the dataset
-df = df_2
-target_column = 'Survived'
-test_size = 0.2
+# Assuming df_2 is already loaded as a DataFrame with preprocessed features
+# For example:
+# df_2 = pd.read_csv('path_to_preprocessed_data.csv')
+
+df = df_2.copy()
+
+# ============================
+# 3. Feature Engineering
+# ============================
+
+# Standardize all column names to lowercase to avoid case sensitivity issues
+df.columns = [col.lower() for col in df.columns]
+
+print("=== Columns in DataFrame ===")
+print(df.columns.tolist())
+
+# ============================
+# 4. Define Features and Target
+# ============================
+
+feature_columns = ['sex_male', 'pclass_3', 'sibsp', 'fare', 'child', 'pclass_2']
+
+# Check for missing features
+missing_features = [col for col in feature_columns if col not in df.columns]
+if missing_features:
+    print(f"Error: Missing features in DataFrame: {missing_features}")
+    exit()
+
+X = df[feature_columns]
+y = df['survived']
+
+# ============================
+# 5. Split the Dataset
+# ============================
+
+test_size = 0.02  # Adjusted to ensure sufficient samples
 random_state = 52
 
-# Splitting the dataset
-X = df.drop(columns=[target_column])
-y = df[target_column]
+print("\n=== Class Distribution Before Split ===")
+print(y.value_counts())
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=test_size, random_state=random_state, stratify=y
-)
+try:
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state, stratify=y
+    )
+    print("\n=== Training Set ===")
+    print(X_train.head())
+    print(y_train.head())
+    print("\n=== Test Set ===")
+    print(X_test.head())
+    print(y_test.head())
+except ValueError as ve:
+    print(f"Error during train_test_split: {ve}")
+    print("Possible causes:")
+    print("- Not enough samples to stratify")
+    print("- Some classes have too few samples")
+    exit()
 
-# Define the pipeline
+# ============================
+# 6. Define the Pipeline
+# ============================
+
 pipeline = Pipeline([
     ('scaler', StandardScaler()),
-    ('mlp', MLPClassifier(random_state=random_state, max_iter=500, **tuned_params))
+    ('mlp', MLPClassifier(
+        random_state=random_state,
+        max_iter=500,
+        activation='tanh',
+        alpha=0.1,
+        hidden_layer_sizes=(100,)
+    ))
 ])
 
-# Train the model
+# ============================
+# 7. Train the Model
+# ============================
+
 pipeline.fit(X_train, y_train)
 
-# Evaluate the model
+# ============================
+# 8. Evaluate the Model
+# ============================
+
 y_train_pred = pipeline.predict(X_train)
 y_test_pred = pipeline.predict(X_test)
 
@@ -1780,23 +1941,963 @@ except AttributeError:
     test_roc_auc = None
 
 # Print evaluation metrics
-print("Training Accuracy:", train_accuracy)
-print("Test Accuracy:", test_accuracy)
-print("Training F1 Score:", train_f1)
-print("Test F1 Score:", test_f1)
-print("Training Precision:", train_precision)
-print("Test Precision:", test_precision)
-print("Training Recall:", train_recall)
-print("Test Recall:", test_recall)
-if train_roc_auc and test_roc_auc:
-    print("Training ROC AUC:", train_roc_auc)
-    print("Test ROC AUC:", test_roc_auc)
+print("\n=== Model Evaluation Metrics ===")
+print(f"Training Accuracy: {train_accuracy:.4f}")
+print(f"Test Accuracy: {test_accuracy:.4f}")
+print(f"Training F1 Score: {train_f1:.4f}")
+print(f"Test F1 Score: {test_f1:.4f}")
+print(f"Training Precision: {train_precision:.4f}")
+print(f"Test Precision: {test_precision:.4f}")
+print(f"Training Recall: {train_recall:.4f}")
+print(f"Test Recall: {test_recall:.4f}")
+if train_roc_auc is not None and test_roc_auc is not None:
+    print(f"Training ROC AUC: {train_roc_auc:.4f}")
+    print(f"Test ROC AUC: {test_roc_auc:.4f}")
+else:
+    print("ROC AUC Score: Not Available for this model.")
 
-# Save the model in .pkl format
-model_path = 'best_tuned_mlp_model.pkl'
-with open(model_path, 'wb') as file:
-    pickle.dump(pipeline, file)
-print(f"Model saved successfully as '{model_path}'")
+# ============================
+# 9. Save the Model
+# ============================
+
+model_path = 'best_tuned_mlp_model.joblib'  # Changed extension to .joblib
+joblib.dump(pipeline, model_path)
+print(f"\nModel saved successfully as '{model_path}'")
+
+# ============================
+# 10. Verify the Scaler
+# ============================
+
+print("\n=== Verifying the Scaler ===")
+print(pipeline.named_steps['scaler'])
+
+
+# In[44]:
+
+
+import joblib
+import pandas as pd
+
+# ============================
+# 1. Load the Trained Pipeline
+# ============================
+
+# Define the path to the saved model
+model_path = 'best_tuned_mlp_model.joblib'
+
+try:
+    # Load the pipeline (which includes the scaler and MLPClassifier)
+    pipeline = joblib.load(model_path)
+    print(f"Successfully loaded the pipeline from '{model_path}'.\n")
+except FileNotFoundError:
+    print(f"Error: The model file '{model_path}' was not found.")
+    exit()
+except Exception as e:
+    print(f"An unexpected error occurred while loading the model: {e}")
+    exit()
+
+# ============================
+# 2. Verify Pipeline Components
+# ============================
+
+print("=== Pipeline Components ===")
+for step_name, step in pipeline.named_steps.items():
+    print(f"{step_name}: {step}")
+print("\n")
+
+# ============================
+# 3. Define Test Subjects
+# ============================
+
+# Test Subject 1: Expected to NOT survive (Drown)
+# - Male, 3rd Class, 1 Sibling/Spouse Aboard, Low Fare, Adult
+test_subject_1 = {
+    'sex_male': 1,  # Male
+    'pclass_3': 1,  # 3rd Class
+    'sibsp': 1,  # 1 Sibling/Spouse Aboard
+    'fare': 10.0,  # Low Fare
+    'child': 0,  # Adult
+    'pclass_2': 0  # Not 2nd Class
+}
+
+# Test Subject 2: Expected to Survive
+# - Female, 1st Class, No Siblings/Spouses Aboard, High Fare, Child
+test_subject_2 = {
+    'sex_male': 0,  # Female
+    'pclass_3': 0,  # Not 3rd Class
+    'sibsp': 0,  # No Siblings/Spouses Aboard
+    'fare': 100.0,  # High Fare
+    'child': 1,  # Child
+    'pclass_2': 0  # Not 2nd Class
+}
+
+# Create a DataFrame with the test subjects
+test_data = pd.DataFrame([test_subject_1, test_subject_2])
+
+print("=== Test Subjects ===")
+print(test_data)
+print("\n")
+
+# ============================
+# 4. Apply Scaling and Predict
+# ============================
+
+# Access the scaler
+scaler = pipeline.named_steps['scaler']
+
+# Manually scale the test data using the scaler
+scaled_test_data = scaler.transform(test_data)
+
+# Make predictions using the pipeline
+predictions = pipeline.named_steps['mlp'].predict(scaled_test_data)
+
+# Predict probabilities
+probabilities = pipeline.named_steps['mlp'].predict_proba(scaled_test_data)
+
+# Map predictions to labels
+prediction_labels = ['Did Not Survive', 'Survived']
+
+# ============================
+# 5. Display the Results
+# ============================
+
+for i, (pred, proba) in enumerate(zip(predictions, probabilities)):
+    print(f"--- Test Subject {i+1} ---")
+    print(test_data.iloc[i])
+    print(f"Prediction: {prediction_labels[pred]}")
+    print(f"Probability:")
+    print(f"  Did Not Survive: {proba[0]:.4f}")
+    print(f"  Survived: {proba[1]:.4f}\n")
+
+
+# In[45]:
+
+
+scaled_data = pipeline.named_steps['scaler'].transform(test_data)
+predictions = pipeline.named_steps['mlp'].predict(scaled_data)
+print(scaled_data)
+print(predictions)
+
+
+# ## LETS UPLOAD IT BABY!!!
+
+# pip freeze
+# 
+
+# # The go to CMD:
+# 
+# pip install pipreqs
+# 
+# pipreqs C:\Users\Administrator\Project_Titanic
+# 
+
+# Dang baby, this pipreqs work :O 
+
+# In[ ]:
+
+
+
+
+
+# # Upgrade pip
+# !pip install --upgrade pip
+# 
+# # Update the required libraries to the latest versions
+# !pip install --upgrade numpy pandas scikit-learn xgboost lightgbm catboost matplotlib seaborn joblib flask
+# 
+
+# ! pip install --upgrade pip
+# 
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# cd C:\Users\Administrator\Project_Titanic
+# 
+# 
+# 
+# 
+# conda env list
+# 
+# 
+# conda activate project_titanic
+# 
+# 
+# 
+# 
+# app.py
+# 
+
+# This is how you double check:
+
+# In[51]:
+
+
+import joblib
+import numpy as np
+
+# Load the saved pipeline
+model_path = 'best_tuned_mlp_model.joblib'
+pipeline_loaded = joblib.load(model_path)
+print(f"Model loaded successfully from '{model_path}'.")
+
+# Access and print the scaler
+scaler_loaded = pipeline_loaded.named_steps['scaler']
+print("\n=== Loaded Scaler ===")
+print(scaler_loaded)
+
+# Access and print the classifier
+classifier_loaded = pipeline_loaded.named_steps['mlp']
+print("\n=== Loaded Classifier ===")
+print(classifier_loaded)
+
+# Example prediction
+# Replace the following feature values with a realistic example
+# Features order: [sex_male, pclass_3, sibsp, fare, child, pclass_2]
+example_input = np.array([[1, 1, 2, 32.0, 1, 1]])  # Example feature array
+prediction = pipeline_loaded.predict(example_input)
+print(f"\nPrediction for the example input: {prediction[0]}")
+
+
+# test:
+
+# In[52]:
+
+
+import joblib
+
+# Load the pipeline
+pipeline_loaded = joblib.load('best_tuned_mlp_model.joblib')
+
+# Access the scaler
+print(pipeline_loaded.named_steps['scaler'])
+
+
+# another test, for scaler presence:
+
+# In[53]:
+
+
+import joblib
+
+# Load the pipeline
+pipeline_loaded = joblib.load('best_tuned_mlp_model.joblib')
+
+# Access the scaler
+print(pipeline_loaded.named_steps['scaler'])
+
+
+# In[55]:
+
+
+import joblib
+import numpy as np
+import pandas as pd
+
+# Load the pipeline
+model_path = 'best_tuned_mlp_model.joblib'
+pipeline_loaded = joblib.load(model_path)
+print(f"Model loaded successfully from '{model_path}'.")
+
+# Access and print the scaler
+scaler_loaded = pipeline_loaded.named_steps['scaler']
+print("\n=== Loaded Scaler ===")
+print(scaler_loaded)
+
+# Access and print the classifier
+classifier_loaded = pipeline_loaded.named_steps['mlp']
+print("\n=== Loaded Classifier ===")
+print(classifier_loaded)
+
+# Example prediction
+# Features order: [sex_male, pclass_3, sibsp, fare, child, pclass_2]
+example_features = {
+    'sex_male': 0,    # Female
+    'pclass_3': 0,     # 1st class
+    'sibsp': 2,
+    'fare': 32.0,
+    'child': 0,
+    'pclass_2': 0
+}
+example_df = pd.DataFrame([example_features])
+print("\n=== Example Input ===")
+print(example_df)
+
+# Make prediction
+prediction = pipeline_loaded.predict(example_df)[0]  # 0 or 1
+print(f"\nPrediction for the example input: {prediction}")
+
+# Check probabilities
+try:
+    proba = pipeline_loaded.predict_proba(example_df)[0]
+    print(f"Prediction probabilities: {proba}")
+except AttributeError:
+    print("Prediction probabilities not available for this model.")
+
+
+# # OKAY!!!! LOOKS LIKE THIS MLP CLASSIFIER WON'T WORK PROPERLY, SO I WILL TRY THIS AGAIN, STARTING FROM DF!!!!
+
+# In[56]:
+
+
+url = "https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"
+
+data = pd.read_csv(url)
+data.head()
+
+
+# In[57]:
+
+
+# Display the number of rows before dropping
+print(f"Initial dataset shape: {data.shape}")
+
+# Drop the 'Cabin' column
+data_cleaned = data.drop(columns=['Cabin'])
+print("Dropped 'Cabin' column.")
+
+# Display the number of missing 'Age' values
+missing_age = data_cleaned['Age'].isnull().sum()
+print(f"Number of missing 'Age' values before dropping: {missing_age}")
+
+# Drop rows with missing 'Age' values
+data_cleaned = data_cleaned.dropna(subset=['Age'])
+print("Dropped rows with missing 'Age' values.")
+
+# Display the dataset shape after dropping
+print(f"Dataset shape after dropping: {data_cleaned.shape}")
+
+
+# In[58]:
+
+
+age_threshold = 21
+
+# Create the 'Child' column: True if Age < 16, else False
+data_cleaned['Child'] = data_cleaned['Age'] < age_threshold
+print("Added 'Child' column based on 'Age'.")
+
+# Display the distribution of the 'Child' feature
+child_counts = data_cleaned['Child'].value_counts()
+print("\nDistribution of 'Child' feature:")
+print(child_counts)
+
+
+# In[59]:
+
+
+columns_to_drop = ['PassengerId', 'Name', 'Ticket']  # Ticket is like a code, we don't need it, FARE is the one that is interesting
+
+X = data_cleaned.drop(columns=columns_to_drop + ['Survived'])  # 'Survived' is the target
+y = data_cleaned['Survived']
+
+print("Updated Features shape:", X.shape)
+print("Updated Target shape:", y.shape)
+
+
+# In[60]:
+
+
+df = pd.concat([X, y], axis=1)
+df.columns = list(X.columns) + ['Survived']
+
+
+# In[61]:
+
+
+df.head()
+
+
+# In[62]:
+
+
+outlier_fare = df[df['Fare'] > 500]
+print("Outlier with Fare > 500:")
+print(outlier_fare)
+
+# Get the index of the outlier
+outlier_index = outlier_fare.index
+print(f"Index of the outlier to be dropped: {outlier_index.tolist()}")
+
+# Drop the outlier from the combined DataFrame
+df = df.drop(index=outlier_index)
+
+# Confirm the shape of the DataFrame after dropping the outlier
+print(f"Shape of the combined DataFrame after dropping outliers: {df.shape}")
+
+# Optional: Plot boxplots for numerical features after cleaning
+numerical_features = [col for col in X.columns if col not in ['Child', 'Sex_male', 'Embarked_Q', 'Embarked_S', 'Pclass_2', 'Pclass_3']]
+for feature in numerical_features:
+    plt.figure(figsize=(6, 4))
+    sns.boxplot(x=df[feature], color='lightgreen')
+    plt.title(f'Boxplot of {feature} (after outlier removal)')
+    plt.show()
+
+
+# In[63]:
+
+
+def preprocess_dataframe(df):
+    """
+    Enhanced preprocessing that:
+    1. Automatically detects feature types
+    2. Ensures proper numeric formats
+    3. Preserves original column names
+    """
+    df = df.copy()
+    
+    # Auto-detect features (modified to handle booleans)
+    categorical_features = df.select_dtypes(include=['object', 'category', 'bool']).columns.tolist()
+    numeric_cols = df.select_dtypes(include=['number']).columns
+    
+    # Convert low-cardinality numeric to categorical
+    for col in numeric_cols:
+        if df[col].nunique() < 10:
+            categorical_features.append(col)
+            df[col] = df[col].astype(str)
+
+    # Handle missing values
+    df[categorical_features] = df[categorical_features].fillna(df[categorical_features].mode().iloc[0])
+    numerical_features = df.select_dtypes(include=['number']).columns.tolist()
+    df[numerical_features] = df[numerical_features].fillna(df[numerical_features].median())
+
+    # One-hot encode and ensure numeric values
+    df = pd.get_dummies(df, columns=categorical_features, drop_first=True)
+    
+    # Convert all boolean columns to integers (critical fix!)
+    bool_cols = df.select_dtypes(include='bool').columns
+    df[bool_cols] = df[bool_cols].astype(int)
+
+    # Scale numerical features
+    if numerical_features:
+        scaler = StandardScaler()
+        df[numerical_features] = scaler.fit_transform(df[numerical_features])
+
+    return df
+
+
+# In[64]:
+
+
+df = preprocess_dataframe(df)
+
+
+# In[65]:
+
+
+df.head()
+
+
+# In[66]:
+
+
+from sklearn.model_selection import train_test_split
+
+def split_dataframe(df, target_column, test_size=0.2, random_state=None):
+    """
+    Split a DataFrame into training and test sets with stratification.
+    
+    Parameters:
+    - df: pandas DataFrame containing both features and target
+    - target_column: name of the target column (string)
+    - test_size: proportion of dataset to allocate to test (default 0.2)
+    - random_state: random seed for reproducibility
+    
+    Returns:
+    - X_train, X_test, y_train, y_test as DataFrames/Series
+    """
+    X = df.drop(columns=[target_column])
+    y = df[target_column]
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y,
+        test_size=test_size,
+        random_state=random_state,
+        stratify=y  # Ensures same class distribution in splits
+    )
+    
+    return X_train, X_test, y_train, y_test
+
+
+# In[67]:
+
+
+df_X_train, df_X_test, df_y_train, df_y_test = split_dataframe(df, "Survived_1", test_size=0.2, random_state=None)
+
+print(f"Training set size: {df_X_train.shape}")
+print(f"Test set size: {df_X_test.shape}")
+print(f"Target set size: {df_y_train.shape}")
+print(f"Target set size: {df_y_test.shape}")
+
+
+# In[68]:
+
+
+find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test)
+
+
+# In[69]:
+
+
+selected_features, metrics_history = forward_feature_selection(df, target_column='Survived_1', 
+                                                                test_size=0.2, auc_threshold=0.001, max_features=None)
+
+
+# In[70]:
+
+
+selected_features = [
+    "Sex_male",
+    "Fare",
+    "Pclass_3",
+    "Child_True",
+    "Pclass_2",
+    "Age",
+    "Embarked_S",
+    "SibSp_5",
+    "Survived_1"
+]
+
+df_1 = df[selected_features]
+
+df_1.head()
+
+
+# In[71]:
+
+
+df_X_train, df_X_test, df_y_train, df_y_test = split_dataframe(df_1, "Survived_1", test_size=0.2, random_state=None)
+
+print(f"Training set size: {df_X_train.shape}")
+print(f"Test set size: {df_X_test.shape}")
+print(f"Target set size: {df_y_train.shape}")
+print(f"Target set size: {df_y_test.shape}")
+
+
+# In[72]:
+
+
+find_best_model_classification(df_X_train, df_X_test, df_y_train, df_y_test)
+
+
+# I'm not doing MLP again.
+
+# In[73]:
+
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, roc_auc_score, classification_report, confusion_matrix
+
+# Train Logistic Regression on df_1
+log_reg_model = LogisticRegression(penalty='l2', C=10, solver='lbfgs', max_iter=1000, random_state=42)
+
+# Fit the model on the training data
+log_reg_model.fit(df_X_train, df_y_train)
+
+# Predict on the test set
+y_pred = log_reg_model.predict(df_X_test)
+y_pred_proba = log_reg_model.predict_proba(df_X_test)[:, 1]
+
+# Calculate performance metrics
+accuracy = accuracy_score(df_y_test, y_pred)
+roc_auc = roc_auc_score(df_y_test, y_pred_proba)
+conf_matrix = confusion_matrix(df_y_test, y_pred)
+class_report = classification_report(df_y_test, y_pred)
+
+# Print results
+print("Logistic Regression (L2, C=10) Results:")
+print(f"Accuracy: {accuracy:.4f}")
+print(f"ROC AUC: {roc_auc:.4f}")
+print("Confusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(class_report)
+
+
+# In[74]:
+
+
+Over_Fitting_Inquiry(df_1, target_column='Survived_1', test_size=0.2, random_state=52, names=['Model1'], overfitting_threshold=0.1)
+
+
+# In[75]:
+
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
+from sklearn.metrics import accuracy_score, f1_score, roc_auc_score, precision_score, recall_score, classification_report
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+import numpy as np
+import pandas as pd
+
+def tune_logistic_regression(
+    df: pd.DataFrame,
+    target_column: str,
+    test_size: float = 0.2,
+    random_state: int = 52,
+    param_grid: dict = None,
+    scoring: str = 'accuracy',
+    cv: int = 5,
+    n_jobs: int = -1,
+    overfitting_threshold: float = 0.1,
+    complexity: int = 5
+):
+    """
+    Fine-tunes a Logistic Regression model with L2 regularization using GridSearchCV.
+    
+    Features:
+    - Dynamic parameter grid based on complexity level (1-10)
+    - Built-in feature scaling
+    - Overfitting detection and penalty system
+    - Comprehensive performance metrics
+    - Cross-validation validation
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame with features and target
+        target_column (str): Name of the target column (binary classification)
+        test_size (float): Test set size (default: 0.2)
+        random_state (int): Random seed (default: 52)
+        param_grid (dict): Custom parameter grid (optional)
+        scoring (str): Optimization metric (default: 'accuracy')
+        cv (int): Cross-validation folds (default: 5)
+        n_jobs (int): Parallel jobs (default: -1)
+        overfitting_threshold (float): Allowed train-test gap (default: 0.1)
+        complexity (int): Hyperparameter grid complexity (1-10, default: 5)
+
+    Returns:
+        best_estimator: Optimized Logistic Regression model
+        final_score: Comprehensive performance score
+        best_params: Best hyperparameters
+    """
+    
+    # Validate target
+    if df[target_column].nunique() != 2:
+        raise ValueError("Target must be binary for logistic regression")
+
+    # Create dynamic parameter grid
+    if param_grid is None:
+        base_c_values = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+        
+        # Adjust grid based on complexity
+        if complexity <= 3:
+            param_grid = {
+                'logreg__C': [1, 10, 100],
+                'logreg__solver': ['lbfgs', 'liblinear'],
+                'logreg__max_iter': [100, 200]
+            }
+        elif complexity <= 7:
+            param_grid = {
+                'logreg__C': np.logspace(-2, 3, 20).tolist(),
+                'logreg__solver': ['lbfgs', 'liblinear', 'saga'],
+                'logreg__max_iter': [200, 500],
+                'logreg__class_weight': [None, 'balanced']
+            }
+        else:
+            param_grid = {
+                'logreg__C': np.logspace(-4, 4, 50).tolist(),
+                'logreg__solver': ['lbfgs', 'newton-cg', 'liblinear', 'saga'],
+                'logreg__max_iter': [500, 1000],
+                'logreg__class_weight': [None, 'balanced'],
+                'logreg__fit_intercept': [True, False],
+                'logreg__tol': [1e-4, 1e-5, 1e-6]
+            }
+
+    # Split data
+    X = df.drop(columns=[target_column])
+    y = df[target_column]
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state, stratify=y
+    )
+
+    # Create pipeline
+    pipeline = Pipeline([
+        ('scaler', StandardScaler()),
+        ('logreg', LogisticRegression(penalty='l2', random_state=random_state))
+    ])
+
+    # Configure grid search
+    grid_search = GridSearchCV(
+        estimator=pipeline,
+        param_grid=param_grid,
+        cv=StratifiedKFold(n_splits=cv, shuffle=True, random_state=random_state),
+        scoring=scoring,
+        n_jobs=n_jobs,
+        verbose=1
+    )
+
+    # Execute grid search
+    print("\nStarting Logistic Regression optimization...")
+    grid_search.fit(X_train, y_train)
+    print("Optimization complete!")
+
+    # Get best model
+    best_model = grid_search.best_estimator_
+    best_params = grid_search.best_params_
+    
+    # Evaluate performance
+    train_pred = best_model.predict(X_train)
+    test_pred = best_model.predict(X_test)
+    
+    # Calculate metrics
+    metrics = {
+        'train_accuracy': accuracy_score(y_train, train_pred),
+        'test_accuracy': accuracy_score(y_test, test_pred),
+        'f1': f1_score(y_test, test_pred),
+        'roc_auc': roc_auc_score(y_test, best_model.predict_proba(X_test)[:, 1]),
+        'precision': precision_score(y_test, test_pred),
+        'recall': recall_score(y_test, test_pred)
+    }
+
+    # Calculate overfitting penalty
+    performance_gap = metrics['train_accuracy'] - metrics['test_accuracy']
+    penalty = 0.5 * max(0, performance_gap - overfitting_threshold)
+    
+    # Composite score calculation
+    base_score = np.mean([
+        metrics['test_accuracy'],
+        metrics['f1'],
+        metrics['roc_auc'],
+        grid_search.best_score_
+    ])
+    final_score = base_score - penalty
+
+    # Print results
+    print("\n=== Best Model Performance ===")
+    print(f"Best Parameters: {best_params}")
+    print(f"Test Accuracy: {metrics['test_accuracy']:.4f}")
+    print(f"Test F1: {metrics['f1']:.4f}")
+    print(f"Test ROC AUC: {metrics['roc_auc']:.4f}")
+    print(f"Overfitting Penalty: {penalty:.4f}")
+    print(f"Final Score: {final_score:.4f}")
+    print("\nClassification Report:")
+    print(classification_report(y_test, test_pred))
+
+    return best_model, final_score, best_params
+
+
+# ### Hypertuning the second model:
+
+# In[80]:
+
+
+best_model, score, params = tune_logistic_regression(
+    df=df_1,
+    target_column='Survived_1',
+    complexity=8  # More complex parameter search
+)
+
+
+# In[77]:
+
+
+df_1.head()
+
+
+# In[78]:
+
+
+import joblib
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
+                             precision_score, recall_score, classification_report)
+
+# ============================
+# 1. Load & Verify Data
+# ============================
+# Model naming and versioning
+model_name = "survival_predictor_v1"
+save_formats = ['joblib', 'pkl']
+
+required_features = [
+    'Sex_male', 'Fare', 'Pclass_3', 'Child_True',
+    'Pclass_2', 'Age', 'Embarked_S', 'SibSp_5'
+]
+
+target_column = 'Survived_1'
+
+# Verify dataframe structure
+assert all(col in df_1.columns for col in required_features + [target_column]), \
+    "Missing required columns in dataframe"
+
+# ============================
+# 2. Configure Optimal Model
+# ============================
+best_params = {
+    'C': 0.0062505519252739694,
+    'class_weight': None,
+    'fit_intercept': True,
+    'max_iter': 500,
+    'solver': 'lbfgs',
+    'tol': 0.0001
+}
+
+# Create optimized pipeline
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('logreg', LogisticRegression(**best_params, random_state=52))
+])
+
+# ============================
+# 3. Data Preparation
+# ============================
+X = df_1[required_features]
+y = df_1[target_column]
+
+# Stratified split (maintains class balance)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=52,
+    stratify=y
+)
+
+# ============================
+# 4. Train & Evaluate
+# ============================
+pipeline.fit(X_train, y_train)
+
+# Generate predictions and probabilities
+y_pred = pipeline.predict(X_test)
+y_proba = pipeline.predict_proba(X_test)[:, 1]
+
+# Calculate metrics
+metrics = {
+    'accuracy': accuracy_score(y_test, y_pred),
+    'f1': f1_score(y_test, y_pred),
+    'roc_auc': roc_auc_score(y_test, y_proba),
+    'precision': precision_score(y_test, y_pred),
+    'recall': recall_score(y_test, y_pred)
+}
+
+# ============================
+# 5. Results Output
+# ============================
+print("\n" + "="*55)
+print(f"=== Optimal Model: {model_name} ===")
+print("="*55)
+print(f"Test Accuracy: {metrics['accuracy']:.4f}")
+print(f"Test F1: {metrics['f1']:.4f}")
+print(f"Test ROC AUC: {metrics['roc_auc']:.4f}")
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# ============================
+# 6. Enhanced Model Persistence
+# ============================
+# Save in multiple formats
+for fmt in save_formats:
+    filename = f"{model_name}.{fmt}"
+    joblib.dump(pipeline, filename)
+    print(f"Model saved as: {filename}")
+
+# Additional metadata saving
+model_info = {
+    'model_name': model_name,
+    'features': required_features,
+    'target': target_column,
+    'metrics': metrics,
+    'parameters': best_params
+}
+
+joblib.dump(model_info, f"{model_name}_metadata.joblib")
+
+print("\n" + "-"*55)
+print(f"Model successfully saved in {len(save_formats)} formats")
+print(f"Core model name: {model_name}")
+print(f"Additional metadata saved: {model_name}_metadata.joblib")
+print("Final features used:", required_features)
+
+
+# In[79]:
+
+
+import joblib
+import pandas as pd
+
+# Load the saved model and metadata
+model_name = "survival_predictor_v1"
+model = joblib.load(f'{model_name}.joblib')
+metadata = joblib.load(f'{model_name}_metadata.joblib')
+
+print(f"\n=== Testing Model: {metadata['model_name']} ===")
+print("Features used:", metadata['features'])
+
+# Create test cases with ALL required features in exact order
+test_cases = [
+    {  # Likely survivor (Female, 1st class, high fare)
+        'Sex_male': 0,
+        'Fare': 120.0,
+        'Pclass_3': 0,
+        'Child_True': 0,
+        'Pclass_2': 0,
+        'Age': 28.0,
+        'Embarked_S': 1,
+        'SibSp_5': 0
+    },
+    {  # Likely non-survivor (Male, 3rd class, low fare)
+        'Sex_male': 1,
+        'Fare': 7.25,
+        'Pclass_3': 1,
+        'Child_True': 0,
+        'Pclass_2': 0,
+        'Age': 35.0,
+        'Embarked_S': 1,
+        'SibSp_5': 0
+    }
+]
+
+# Convert to DataFrame with proper feature ordering
+test_df = pd.DataFrame(test_cases)[metadata['features']]
+
+# Get predictions and probabilities
+predictions = model.predict(test_df)
+probabilities = model.predict_proba(test_df)
+
+# Display detailed results
+print("\n=== Test Case Results ===")
+for i, (features, pred, prob) in enumerate(zip(test_df.to_dict('records'), predictions, probabilities)):
+    print(f"\nCase {i+1}:")
+    print(f"Prediction: {'Survived (1)' if pred == 1 else 'Did Not Survive (0)'}")
+    print(f"Probability: {prob[1]:.2%} chance of survival")
+    print("Feature Values:")
+    print(f" - Sex: {'Male' if features['Sex_male'] == 1 else 'Female'}")
+    print(f" - Class: {'3rd' if features['Pclass_3'] else '2nd' if features['Pclass_2'] else '1st'}")
+    print(f" - Fare: £{features['Fare']:.2f}")
+    print(f" - Age: {features['Age']:.1f} years")
+    print(f" - Embarked: {'Southampton' if features['Embarked_S'] else 'Other'}")
+    print(f" - SibSp_5: {'Yes' if features['SibSp_5'] else 'No'}")
+    print(f" - Child: {'Yes' if features['Child_True'] else 'No'}")
+    print("➖" * 40)
+
+print("\nExpected Pattern:")
+print("Case 1 should survive (high fare, female, 1st class)")
+print("Case 2 should not survive (male, 3rd class, low fare)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
